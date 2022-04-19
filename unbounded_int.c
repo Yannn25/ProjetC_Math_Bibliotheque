@@ -1,38 +1,11 @@
 #include <stdio.h>
-<<<<<<< unbounded_int.c
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "unbounded_int.h"
-
- unbounded_int string2unbounded_int(const char *e) {
-    unbounded_int res = malloc(strlen(e) * sizeof(unbounded_int));
-    if( res == NULL ){
-        res.signe = '*';
-        return res;
-    }
-    if(e[0] == '-'){
-        res.signe = '-';
-        res.len = strlen(e) - 1;
-    }
-    res.signec = '+';
-    res.len = strlen(e);
-    // on initialise les pointeurs vers le premier et le dernier 
-    res.premier = res.signe == '+' ? e[0] : e[1];
-    res.dernier = e[strlen(e)];
-    //on 
-    char *tmp = e;
-    while(tmp != '\0'){
-        res
-        e++;
-    }   
-    return res;
- }
-=======
-#include <stdlib.h>
 #include <ctype.h>//ensemble de bibliothèques standard de fonctions pour vérifier la valeur d'un char
+
 #include "unbounded_int.h"
+
 
 unbounded_int  NouvelleListe(){
     unbounded_int *ub = malloc(sizeof(unbounded_int));
@@ -44,8 +17,8 @@ unbounded_int  NouvelleListe(){
     return *ub;
 }
 
-unbounded_int string2unbounded_int(const char *e)
-{
+unbounded_int string2unbounded_int(const char *e) {
+    
     unbounded_int liste = NouvelleListe();
     chiffre *tmp  = NULL;
     chiffre *c = malloc(sizeof(chiffre));
@@ -88,8 +61,8 @@ unbounded_int string2unbounded_int(const char *e)
     return liste;
 }
 
-unbounded_int ll2unbounded_int(long long i)
-{
+unbounded_int ll2unbounded_int(long long i) {
+   
    char e = i+'0';//transforme le nombre en chaine de caractère
    unbounded_int liste = string2unbounded_int(&e);
 
@@ -97,16 +70,7 @@ unbounded_int ll2unbounded_int(long long i)
     
     
 }
->>>>>>> unbounded_int.c
 
-/*char *unbounded_int2string(unbounded_int i)
-{
-    char chaine = malloc(sizeof(int)*i.len);
-    /*
-        chaine[0] = '-' si le signe est moins
-        sinon
-    */
-//}*/
 
 char * unbounded_int2string(unbounded_int i){
     assert(i.signe != '*');
@@ -153,7 +117,7 @@ int unbounded_int_cmp_unbounded_int(unbounded_int a, unbounded_int b) {
 }
 
 int unbounded_int_cmp_ll(unbounded_int a, long long b) {
-    //return unbounded_int_cmp_unbounded_int(a,ll2unbounded_int(b));
+    return unbounded_int_cmp_unbounded_int(a,ll2unbounded_int(b));
 }
 
 static void affiche_unbounded_int(unbounded_int a) {

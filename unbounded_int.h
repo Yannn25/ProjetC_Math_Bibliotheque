@@ -18,18 +18,25 @@ typedef struct{
 /* !!!  Si les appels à malloc() échouent pour indiquer le problème la fonction doit retourner un unbounded_int
 avec le champ signe == ’*’  */
 
-unbounded_int string2unbounded_int(const char *e);
 
-<<<<<<< unbounded_int.h
+unbounded_int string2unbounded_int(const char *e);
+/* prenant en argument l’adresse d’une chaîne de caractères représentant un entier (e.g. "421") et renvoyant une va-
+leur unbounded_int représentant cet entier suivant le format présenté à la section 3.
+Si la chaîne pointée par e ne représente pas un entier la fonction retournera un
+unbounded_int avec le champ signe == ’*’. */
+
 unbounded_int string2unbounded_int(const char *e);
 /* prenant en argument l’adresse d’une chaîne de caractères représentant un entier (e.g. "421") et renvoyant une 
 valeur unbounded_int représentant cet entier suivant le format présenté à la section 3.
 Si la chaîne pointée par e ne représente pas un entier la fonction retournera un
 unbounded_int avec le champ signe == ’*’. */
 
-=======
+
 char *unbounded_int2string(unbounded_int i);
->>>>>>> unbounded_int.h
+/* qui prend en argument une structure unbounded_int représentant un entier et retourne cet entier sous forme d’une chaîne
+de caractères. Cette fonction est l’inverse de la fonction string2unbounded_in(), par exemple
+unbounded_int2string(string2unbounded_in("-4543676543298" )) doit retourner un
+pointeur vers la chaîne de caractères "-4543676543298". */
 
 unbounded_int ll2unbounded_int(long long i);
 /* qui prend en argument un nombre long long et retourne la structure unbounded_int représentant ce nombre. */
@@ -59,23 +66,12 @@ unbounded_int unbounded_int_difference( unbounded_int a, unbounded_int b);
 unbounded_int unbounded_int_produit( unbounded_int a, unbounded_int b);
 /* renvoyant la représentation de leur produit */
 
-char *unbounded_int2string(unbounded_int i);
-
-int unbounded_int_cmp_unbounded_int(unbounded_int a, unbounded_int b);
-
-int unbounded_int_cmp_ll(unbounded_int a, long long b);
-
-unbounded_int unbounded_int_somme(unbounded_int a, unbounded_int b);
-
-unbounded_int unbounded_int_difference( unbounded_int a, unbounded_int b);
-
-<<<<<<< unbounded_int.h
 /* FONCTIONS AUXILIAIRES  */
 
 static void affiche_unbounded_int(unbounded_int a);
-=======
-unbounded_int unbounded_int_produit( unbounded_int a, unbounded_int b);
 
->>>>>>> unbounded_int.h
+
+
+
 
 
