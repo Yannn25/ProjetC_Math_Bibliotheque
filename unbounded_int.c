@@ -6,9 +6,16 @@
 
 #include "unbounded_int.h"
 
-
-unbounded_int  NouvelleListe(){
+static chiffre *new(char c){
+    chiffre *res = malloc(sizeof(chiffre));
+    assert(res != NULL);
+    res->c = c;
+    res->suivant = NULL;
+    res->precedent = NULL;
+}
+static unbounded_int  NouvelleListe(){
     unbounded_int *ub = malloc(sizeof(unbounded_int));
+    assert(ub != NULL);
     ub->len = 0;
     ub->signe = '*';
     ub->premier = NULL;
@@ -17,37 +24,34 @@ unbounded_int  NouvelleListe(){
     return *ub;
 }
 
+
 unbounded_int string2unbounded_int(const char *e) {
-    
     unbounded_int liste = NouvelleListe();
     chiffre *tmp  = NULL;
     chiffre *c = malloc(sizeof(chiffre));
+    if(c == NULL){
+        return liste;
+    }
     size_t deb = 0;
 
-    if (e[0] == '-')
-    {
+    if (e[0] == '-') {
        liste.signe = '-';
        deb = 1;
     }
-    if( (e[0] != '-' ) || ( !isdigit(e[0])) )
-        return liste;
+    //if( (e[0] != '-' ) || ( !isdigit(e[0])) )
+      //  return liste;
     
-    for (size_t i = deb; i < strlen(e); i++)
-    {
-        if (isdigit(e[i])) //isdigit()-> vérifie si un caractère est un chiffre
-        {
-            c->c = e[i];
-            if (tmp != NULL)
-            {
-                tmp->suivant = c;
-                c->precedent = tmp;
-                tmp = c;
+    for (size_t i = deb; i < strlen(e); i++) {
+        if (isdigit(e[i])) { //isdigit()-> vérifie si un caractère est un chiffre
+            c = new(e[i]);
+            if (liste.premier != NULL) {
+                liste.dernier->suivant = c; 
+		        c->precedent = liste.dernier;
+		        liste.dernier = c;
             }
-            
-           if (liste.premier == NULL)
-           {    
-               liste.premier = c;
-                tmp = c;
+           if (liste.premier == NULL) {    
+                liste.premier = c;
+                liste.dernier = c;
            }  
 
            liste.len++;
@@ -57,7 +61,6 @@ unbounded_int string2unbounded_int(const char *e) {
         liste.signe = '+';
     
     liste.dernier = c;
-
     return liste;
 }
 
@@ -68,11 +71,10 @@ unbounded_int ll2unbounded_int(long long i) {
 
    return liste;
     
-    
 }
 
 
-char * unbounded_int2string(unbounded_int i){
+char * unbounded_int2string(unbounded_int i) {
     assert(i.signe != '*');
     char *res = malloc(i.len * sizeof(char) + 1);
     if( res == NULL ){
@@ -121,25 +123,11 @@ int unbounded_int_cmp_ll(unbounded_int a, long long b) {
 }
 
 static void affiche_unbounded_int(unbounded_int a) {
-    printf("Longueur : %d et Signe : %ld\nunbounded_int : ",a.signe,a.len);
+    printf("Longueur : %ld et Signe : %c\nunbounded_int : ",a.len,a.signe);
     chiffre *tmp = a.premier;
-    while( tmp != a.dernier ){
+    while( tmp !=  NULL){
         printf("%c ",tmp->c);
         tmp = tmp->suivant;
     }
     printf("\n");
-}
-
-int main(void) {
-
-    char *nb = "225";
-    unbounded_int n = string2unbounded_int(nb);
-
-    affiche_unbounded_int(n);
-
-    char *t = "test du testeur";
-    printf("\n ------------ \n%s \n ----------- \n",t);
-    char *unb = unbounded_int2string(n);
-    printf("\n ------------ \n%s \n ----------- \n",unb);
-    return 0;
 }
