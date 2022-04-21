@@ -8,9 +8,12 @@ int main(void) {
 
     affiche_unbounded_int(n);
 
-    char *t = "test du testeur";
+    unbounded_int a = ll2unbounded_int(321);
+    affiche_unbounded_int(a);
+
+    /*char *t = "test du testeur";
     printf("\n ------------ \n%s \n ----------- \n",t);
     char *unb = unbounded_int2string(n);
-    printf("\n ------------ \n%s \n ----------- \n",unb);
+    printf("\n ------------ \n%s \n ----------- \n",unb);*/
 
 }
