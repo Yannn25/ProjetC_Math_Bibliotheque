@@ -25,12 +25,8 @@ leur unbounded_int représentant cet entier suivant le format présenté à la s
 Si la chaîne pointée par e ne représente pas un entier la fonction retournera un
 unbounded_int avec le champ signe == ’*’. */
 
-unbounded_int string2unbounded_int(const char *e);
-/* prenant en argument l’adresse d’une chaîne de caractères représentant un entier (e.g. "421") et renvoyant une 
-valeur unbounded_int représentant cet entier suivant le format présenté à la section 3.
-Si la chaîne pointée par e ne représente pas un entier la fonction retournera un
-unbounded_int avec le champ signe == ’*’. */
-
+unbounded_int ll2unbounded_int(long long i);
+/* qui prend en argument un nombre long long et retourne la structure unbounded_int représentant ce nombre. */
 
 char *unbounded_int2string(unbounded_int i);
 /* qui prend en argument une structure unbounded_int représentant un entier et retourne cet entier sous forme d’une chaîne
@@ -38,17 +34,11 @@ de caractères. Cette fonction est l’inverse de la fonction string2unbounded_i
 unbounded_int2string(string2unbounded_in("-4543676543298" )) doit retourner un
 pointeur vers la chaîne de caractères "-4543676543298". */
 
-unbounded_int ll2unbounded_int(long long i);
-/* qui prend en argument un nombre long long et retourne la structure unbounded_int représentant ce nombre. */
-
-
-
 char *unbounded_int2string(unbounded_int i);
 /* qui prend en argument une structure unbounded_int représentant un entier et retourne cet entier sous forme d’une
 chaîne de caractères. Cette fonction est l’inverse de la fonction string2unbounded_in(), par exemple
 unbounded_int2string(string2unbounded_in("-4543676543298" )) doit retourner un
 pointeur vers la chaîne de caractères "-4543676543298". */
-
 
 int unbounded_int_cmp_unbounded_int(unbounded_int a, unbounded_int b);
 /* qui retourne une des valeurs −1, 0, 1 si, respectivement, a < b, a == b, a > b (ou a, b sont

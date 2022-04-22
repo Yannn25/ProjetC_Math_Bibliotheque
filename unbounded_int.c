@@ -27,7 +27,6 @@ static unbounded_int  NouvelleListe(){
 
 unbounded_int string2unbounded_int(const char *e) {
     unbounded_int liste = NouvelleListe();
-    chiffre *tmp  = NULL;
     chiffre *c = malloc(sizeof(chiffre));
     if(c == NULL){
         return liste;
@@ -38,9 +37,7 @@ unbounded_int string2unbounded_int(const char *e) {
        liste.signe = '-';
        deb = 1;
     }
-    //if( (e[0] != '-' ) || ( !isdigit(e[0])) )
-      //  return liste;
-    
+
     for (size_t i = deb; i < strlen(e); i++) {
         if (isdigit(e[i])) { //isdigit()-> vérifie si un caractère est un chiffre
             c = new(e[i]);
@@ -59,8 +56,7 @@ unbounded_int string2unbounded_int(const char *e) {
     }
     if (deb == 0 )
         liste.signe = '+';
-    
-    liste.dernier = c;
+        
     return liste;
 }
 
