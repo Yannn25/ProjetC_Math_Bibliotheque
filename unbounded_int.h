@@ -34,12 +34,6 @@ de caractères. Cette fonction est l’inverse de la fonction string2unbounded_i
 unbounded_int2string(string2unbounded_in("-4543676543298" )) doit retourner un
 pointeur vers la chaîne de caractères "-4543676543298". */
 
-char *unbounded_int2string(unbounded_int i);
-/* qui prend en argument une structure unbounded_int représentant un entier et retourne cet entier sous forme d’une
-chaîne de caractères. Cette fonction est l’inverse de la fonction string2unbounded_in(), par exemple
-unbounded_int2string(string2unbounded_in("-4543676543298" )) doit retourner un
-pointeur vers la chaîne de caractères "-4543676543298". */
-
 int unbounded_int_cmp_unbounded_int(unbounded_int a, unbounded_int b);
 /* qui retourne une des valeurs −1, 0, 1 si, respectivement, a < b, a == b, a > b (ou a, b sont
 les entiers représentés par a et b) */
@@ -59,6 +53,12 @@ unbounded_int unbounded_int_produit( unbounded_int a, unbounded_int b);
 /* FONCTIONS AUXILIAIRES  */
 
 static void affiche_unbounded_int(unbounded_int a);
+
+static char *ll2str(long long i);
+
+static unbounded_int  NouvelleListe();
+
+static chiffre *new(char c);
 
 
 
