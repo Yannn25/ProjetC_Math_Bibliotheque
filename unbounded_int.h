@@ -53,12 +53,17 @@ unbounded_int unbounded_int_produit( unbounded_int a, unbounded_int b);
 /* FONCTIONS AUXILIAIRES  */
 
 static void affiche_unbounded_int(unbounded_int a);
+/* affichage de notre unbouded int ainsi que les informations sur sa longueur et sont signe*/
 
 static char *ll2str(long long i);
+/* transforme le nombre en chaine de caractère */
 
 static unbounded_int  NouvelleListe();
+/* permet de créer un nouveau unbouded int vide avec pour signe '*', de longeur 0 et sans aucun pointeur */
 
 static chiffre *new(char c);
+/* permet de créer un nouveau chiffre avec le char c passer en paramètres
+    et les pointeurs suivant et precedent a NULL  */
 
 
 

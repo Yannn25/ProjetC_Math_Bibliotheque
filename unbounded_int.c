@@ -7,8 +7,7 @@
 #include "unbounded_int.h"
 
 
-/* permet de créer un nouveau chiffre avec le char c passer en paramètres
-    et les pointeurs suivant et precedent a NULL  */
+
 static chiffre *new(char c){
     chiffre *res = malloc(sizeof(chiffre));
     assert(res != NULL);
@@ -63,7 +62,7 @@ unbounded_int string2unbounded_int(const char *e) {
 
     return liste;
 }
-/* transforme le nombre en chaine de caractère */
+
 static char *ll2str(long long i) {
     int len = 0;
     long long cop1 = i;
@@ -97,7 +96,7 @@ unbounded_int ll2unbounded_int(long long i) {
 }
 
 
-char * unbounded_int2string(unbounded_int i) {
+char *unbounded_int2string(unbounded_int i) {
     assert(i.signe != '*');
     // l'allocation d'espace est faite en fonction du signe de notre unbounded int  
     char *res =  i.signe == '+' ? malloc(i.len * sizeof(char) + 1) : malloc(i.len * sizeof(char) + 2);
@@ -156,6 +155,26 @@ int unbounded_int_cmp_unbounded_int(unbounded_int a, unbounded_int b) {
 int unbounded_int_cmp_ll(unbounded_int a, long long b) {
     return unbounded_int_cmp_unbounded_int(a,ll2unbounded_int(b));
 }
+
+unbounded_int unbounded_int_somme(unbounded_int a, unbounded_int b) {
+    int l = a.len > b.len ? a.len : b.len;
+    char *res = malloc((sizeof(char) * l) +1);
+    res[l] = '\0';
+    chiffre *tmpA = a.dernier;
+    chiffre *tmpB = b.dernier;
+    int r = 0;
+    
+    do {
+      int c = (((tmpA->c-'0') + (tmpB->c-'0')+ r )% 10) ;
+      res[l-1] = c+'0';
+      r = ((tmpA->c-'0') + (tmpB->c-'0')+ r )/10;
+      l--;
+      tmpA = tmpA->precedent;
+      tmpB = tmpB->precedent;
+    } while(tmpA != NULL || tmpB != NULL);
+    return string2unbounded_int(res);
+}
+
 
 static void affiche_unbounded_int(unbounded_int a) {
     printf("Longueur : %ld et Signe : %c\nunbounded_int : ",a.len,a.signe);

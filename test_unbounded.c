@@ -7,6 +7,9 @@ int main(void) {
     char *nb = "-225";
     unbounded_int n = string2unbounded_int(nb);
     affiche_unbounded_int(n);
+    char *zero = "0";
+    unbounded_int z =string2unbounded_int(zero);
+    affiche_unbounded_int(z);
 
     printf("\n ------ LONG LONG TO UNBOUNDED INT ------\n");
     unbounded_int a = ll2unbounded_int(321);
@@ -15,6 +18,8 @@ int main(void) {
     printf("\n ------ UNBOUNDED INT TO STRING ------\n");
     char *st = unbounded_int2string(n);
     printf("\n%s\n",st);
+    char *t = unbounded_int2string(string2unbounded_int("-4543676543298" ));
+    printf("\n%s\n",t);
 
     unbounded_int b = ll2unbounded_int(322);
     unbounded_int c = ll2unbounded_int(1);
@@ -30,9 +35,9 @@ int main(void) {
     k = unbounded_int_cmp_unbounded_int(b,b);//err
     printf("e: %i\nf: %i\ng: %i\nh: %i\ni: %i\nj: %i\nk: %i\n",e,f,g,h,i,j,k);
     printf("----------- \n");
-    /*char *t = "test du testeur";
-    
-    char *unb = unbounded_int2string(n);
-    printf("\n ------------ \n%s \n ----------- \n",unb);*/
+
+    printf("\n--------  SOMME  -------\n");
+    unbounded_int s = unbounded_int_somme(b,d);
+    affiche_unbounded_int(s);
 
 }
