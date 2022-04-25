@@ -37,7 +37,9 @@ int main(void) {
     printf("----------- \n");
 
     printf("\n--------  SOMME  -------\n");
-    unbounded_int s = unbounded_int_somme(b,d);
+    unbounded_int l = ll2unbounded_int(2998);
+    unbounded_int m = ll2unbounded_int(2002);
+    unbounded_int s = unbounded_int_somme(l,m);
     affiche_unbounded_int(s);
 
 }

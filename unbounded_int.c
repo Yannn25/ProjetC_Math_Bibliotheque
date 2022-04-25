@@ -163,18 +163,31 @@ unbounded_int unbounded_int_somme(unbounded_int a, unbounded_int b) {
     chiffre *tmpA = a.dernier;
     chiffre *tmpB = b.dernier;
     int r = 0;
-    
+    int c = (((tmpA->c-'0') + (tmpB->c-'0')+ r )%10);
     do {
-      int c = (((tmpA->c-'0') + (tmpB->c-'0')+ r )% 10) ;
-      res[l-1] = c+'0';
-      r = ((tmpA->c-'0') + (tmpB->c-'0')+ r )/10;
-      l--;
-      tmpA = tmpA->precedent;
-      tmpB = tmpB->precedent;
+      if(tmpA != NULL && tmpB != NULL) {  
+            c = (((tmpA->c-'0') + (tmpB->c-'0')+ r )%10);
+            res[l-1] = c+'0';
+            r = ((tmpA->c-'0') + (tmpB->c-'0')+ r )/10;
+            l--;
+            tmpA = tmpA->precedent;
+            tmpB = tmpB->precedent;
+      } else if(tmpA == NULL && tmpB != NULL){
+            c = (( (tmpB->c-'0')+ r )%10);
+            res[l-1] = c+'0';
+            r = ((tmpB->c-'0')+ r )/10;
+            l--;
+            tmpB = tmpB->precedent;
+      } else {
+            c = (( (tmpA->c-'0')+ r )%10);
+            res[l-1] = c+'0';
+            r = ((tmpA->c-'0')+ r )/10;
+            l--;
+            tmpA = tmpA->precedent;
+      }
     } while(tmpA != NULL || tmpB != NULL);
     return string2unbounded_int(res);
 }
-
 
 static void affiche_unbounded_int(unbounded_int a) {
     printf("Longueur : %ld et Signe : %c\nunbounded_int : ",a.len,a.signe);
