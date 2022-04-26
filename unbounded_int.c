@@ -158,34 +158,89 @@ int unbounded_int_cmp_ll(unbounded_int a, long long b) {
 
 unbounded_int unbounded_int_somme(unbounded_int a, unbounded_int b) {
     int l = a.len > b.len ? a.len : b.len;
-    char *res = malloc((sizeof(char) * l) +1);
-    res[l] = '\0';
+    char *res = malloc((sizeof(char) * l) +2);
+    res[l+1] = '\0';
     chiffre *tmpA = a.dernier;
     chiffre *tmpB = b.dernier;
     int r = 0;
-    int c = (((tmpA->c-'0') + (tmpB->c-'0')+ r )%10);
+    int c;
     do {
       if(tmpA != NULL && tmpB != NULL) {  
             c = (((tmpA->c-'0') + (tmpB->c-'0')+ r )%10);
-            res[l-1] = c+'0';
             r = ((tmpA->c-'0') + (tmpB->c-'0')+ r )/10;
+            res[l] = c+'0';
             l--;
             tmpA = tmpA->precedent;
             tmpB = tmpB->precedent;
       } else if(tmpA == NULL && tmpB != NULL){
-            c = (( (tmpB->c-'0')+ r )%10);
-            res[l-1] = c+'0';
-            r = ((tmpB->c-'0')+ r )/10;
+            c = (( (tmpB->c-'0')+ r)%10);
+            res[l] = c+'0';
+            r = ((tmpB->c-'0')+ r)/10;
             l--;
             tmpB = tmpB->precedent;
       } else {
             c = (( (tmpA->c-'0')+ r )%10);
-            res[l-1] = c+'0';
+            res[l] = c+'0';
             r = ((tmpA->c-'0')+ r )/10;
             l--;
             tmpA = tmpA->precedent;
       }
     } while(tmpA != NULL || tmpB != NULL);
+  
+    res[l] = r != 0 ? r + '0' : 'a'; 
+    return string2unbounded_int(res);
+}
+
+unbounded_int unbounded_int_difference( unbounded_int a, unbounded_int b) {
+    int l = a.len > b.len ? a.len : b.len;
+    char *res = malloc((sizeof(char) * l) + 1);
+    res[l] = '\0';
+    chiffre *tmpA = a.dernier;
+    chiffre *tmpB = b.dernier;
+    int r = 0;
+    int c;
+    do{
+        if(tmpA != NULL && tmpB != NULL) {  
+           if( ( ( (tmpA->c-'0') - (tmpB->c-'0') ) + r ) >= 0 ){
+               c = ( ( (tmpA->c-'0') - (tmpB->c-'0') ) + r );
+               r = 0;
+           } else {
+               c = ( ( (tmpA->c-'0') - (tmpB->c-'0') ) + r ) + 10;
+               r = -1;
+           }
+            res[l-1] = c+'0';
+            l--;
+            tmpA = tmpA->precedent;
+            tmpB = tmpB->precedent;
+      } else if(tmpA == NULL && tmpB != NULL){
+           if( ( (tmpB->c-'0') + r ) >= 0 ){
+               c = ( ( (tmpB->c-'0') ) + r );
+               r = 0;
+           } else {
+               c = ( ( (tmpB->c-'0') ) + r ) + 10;
+               r = -1;
+           }
+            res[l-1] = c+'0';
+            l--;
+            tmpB = tmpB->precedent;
+      } else {
+           if( ( (tmpA->c-'0') + r ) >= 0 ){
+               c = ( ( (tmpA->c-'0') ) + r );
+               r = 0;
+           } else {
+               c = ( ( (tmpA->c-'0') ) + r ) + 10;
+               r = -1;
+           }
+            res[l-1] = c+'0';
+            l--;
+            tmpA = tmpA->precedent; 
+      }
+    } while(tmpA != NULL || tmpB != NULL);
+    int j = 0;
+    while(res[j] == '0'){
+        res[j] = 'a';
+        j++;
+    }
     return string2unbounded_int(res);
 }
 

@@ -37,9 +37,18 @@ int main(void) {
     printf("----------- \n");
 
     printf("\n--------  SOMME  -------\n");
-    unbounded_int l = ll2unbounded_int(2998);
-    unbounded_int m = ll2unbounded_int(2002);
-    unbounded_int s = unbounded_int_somme(l,m);
+    unbounded_int o = ll2unbounded_int(123456);
+    unbounded_int p = ll2unbounded_int(654321);
+    unbounded_int s = unbounded_int_somme(o,p);
     affiche_unbounded_int(s);
+    unbounded_int l = ll2unbounded_int(201);
+    unbounded_int m = ll2unbounded_int(800);
+    unbounded_int ss = unbounded_int_somme(l,m);
+    affiche_unbounded_int(ss);
 
+    printf("\n--------  SOUSTRACTION  -------\n");
+    unbounded_int q = ll2unbounded_int(2222);
+    unbounded_int r = ll2unbounded_int(2221);
+    unbounded_int sous = unbounded_int_difference(q,r);
+    affiche_unbounded_int(sous);
 }
