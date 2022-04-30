@@ -65,8 +65,11 @@ static chiffre *new(char c);
 /* permet de créer un nouveau chiffre avec le char c passer en paramètres
     et les pointeurs suivant et precedent a NULL  */
 
+static unbounded_int abs_unboundedint(unbounded_int a);
+/* Change le signe de a en '+' afin d'obtenir sa valeur absolue */
 
-
+static unbounded_int neg_unboundedint(unbounded_int a);
+/* Change le signe de a en '-' de a */
 
 
 

@@ -10,10 +10,14 @@ int main(void) {
     char *zero = "0";
     unbounded_int z =string2unbounded_int(zero);
     affiche_unbounded_int(z);
+    unbounded_int sttoi = string2unbounded_int("45ga6kok78ppp9");
+    affiche_unbounded_int(sttoi);
 
     printf("\n ------ LONG LONG TO UNBOUNDED INT ------\n");
     unbounded_int a = ll2unbounded_int(321);
+    unbounded_int lltoi = ll2unbounded_int(-156);
     affiche_unbounded_int(a);
+    affiche_unbounded_int(lltoi);
 
     printf("\n ------ UNBOUNDED INT TO STRING ------\n");
     char *st = unbounded_int2string(n);
@@ -41,14 +45,33 @@ int main(void) {
     unbounded_int p = ll2unbounded_int(654321);
     unbounded_int s = unbounded_int_somme(o,p);
     affiche_unbounded_int(s);
-    unbounded_int l = ll2unbounded_int(201);
-    unbounded_int m = ll2unbounded_int(800);
+    unbounded_int l = string2unbounded_int("-20");
+    unbounded_int m = string2unbounded_int("-20");
     unbounded_int ss = unbounded_int_somme(l,m);
     affiche_unbounded_int(ss);
+    unbounded_int ac1 = ll2unbounded_int(28);
+    unbounded_int bc1 = ll2unbounded_int(-14);
+    unbounded_int sss = unbounded_int_somme(ac1,bc1);
+    affiche_unbounded_int(sss);
+    unbounded_int ac2 = string2unbounded_int("-90");
+    unbounded_int bc2 = string2unbounded_int("30");
+    unbounded_int ssss = unbounded_int_somme(ac2,bc2);
+    affiche_unbounded_int(ssss);
 
     printf("\n--------  SOUSTRACTION  -------\n");
-    unbounded_int q = ll2unbounded_int(2222);
-    unbounded_int r = ll2unbounded_int(2221);
-    unbounded_int sous = unbounded_int_difference(q,r);
+
+    unbounded_int q = ll2unbounded_int(20);
+    unbounded_int r = ll2unbounded_int(24);
+    unbounded_int sous = unbounded_int_difference(r,q);
+    affiche_unbounded_int(sous);
+    sous =  unbounded_int_difference(q,r);
+    affiche_unbounded_int(sous);
+    q = string2unbounded_int("94");
+    r = string2unbounded_int("-6");
+    sous =  unbounded_int_difference(q,r);
+    affiche_unbounded_int(sous);
+    q = ll2unbounded_int(-220);
+    r = ll2unbounded_int(20);
+    sous = unbounded_int_difference(q,r);
     affiche_unbounded_int(sous);
 }
