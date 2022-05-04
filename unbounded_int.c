@@ -7,8 +7,7 @@
 #include "unbounded_int.h"
 
 
-/* permet de créer un nouveau chiffre avec le char c passer en paramètres
-    et les pointeurs suivant et precedent a NULL  */
+
 static chiffre *new(char c){
     chiffre *res = malloc(sizeof(chiffre));
     assert(res != NULL);
@@ -63,7 +62,7 @@ unbounded_int string2unbounded_int(const char *e) {
 
     return liste;
 }
-/* transforme le nombre en chaine de caractère */
+
 static char *ll2str(long long i) {
     int len = 0;
     long long cop1 = i;
@@ -73,14 +72,15 @@ static char *ll2str(long long i) {
         cop1/=10;
     }
     // on prévoit d'allouer plus d'espace de mémoire si notre chiffre est négatif 
-    char *res = i > 0 ? malloc((len * sizeof(char)) + 1) : ((len * sizeof(char)) + 2);
-    int deb = i > 0 ? 0 : 1;
+    char *res = i > 0  ? malloc((len * sizeof(char)) + 1) : malloc((len * sizeof(char)) + 2);
+    int deb = i > 0  ? 0 : 1;
     if(deb == 1){
         res[0] = '-';
+        len++;
     }
     // on place nos chiffres sans oublier de les convertir en char
     for(int j = len-1; j >= deb; j--){
-        res[j] = i%10+'0';
+        res[j] = (abs(i)%10)+'0';
         i /= 10;
     }
     //on oublie pas de mettre le caractère qui spécifie la fin de notre chaine de caractere
@@ -88,16 +88,14 @@ static char *ll2str(long long i) {
     return res;
 }
 unbounded_int ll2unbounded_int(long long i) {
-   
-   char *e = ll2str(i);
-   unbounded_int liste = string2unbounded_int(e);
 
-   return liste;
-    
+   char *e = ll2str(i);
+   return string2unbounded_int(e);
+
 }
 
 
-char * unbounded_int2string(unbounded_int i) {
+char *unbounded_int2string(unbounded_int i) {
     assert(i.signe != '*');
     // l'allocation d'espace est faite en fonction du signe de notre unbounded int  
     char *res =  i.signe == '+' ? malloc(i.len * sizeof(char) + 1) : malloc(i.len * sizeof(char) + 2);
@@ -137,24 +135,146 @@ int unbounded_int_cmp_unbounded_int(unbounded_int a, unbounded_int b) {
         return (int)a.len < (int)b.len ? -1 : 1;
     }
 
-    /* on parcours nos deux chiffres a la recherche de différence*/
+    /* on parcours nos deux chiffres a la recherche de différence les sachant de meme taille */
     chiffre *tmpA = a.premier;
     chiffre *tmpB = b.premier;
-    /* on utilise un DO WHILE a cause du dernier pointeur qui n'est pas 
-       pris en compte en cas de while "normal" */
     do {
         if( tmpA->c > tmpB->c || tmpA->c < tmpB->c ){
             return tmpA->c < tmpB->c ? -1 : 1;
         }
         tmpA = tmpA->suivant;
         tmpB = tmpB->suivant;
-    }while ( tmpA != a.dernier && tmpB != b.dernier);
+    }while ( tmpA != NULL && tmpB != NULL);
     //si a la fin de notre parcours on ne trouve aucune différence alors ils sont égaux
     return 0;
 }
 
 int unbounded_int_cmp_ll(unbounded_int a, long long b) {
     return unbounded_int_cmp_unbounded_int(a,ll2unbounded_int(b));
+}
+
+static unbounded_int abs_unboundedint(unbounded_int a) {
+    a.signe = '+';
+    return a;
+}
+static unbounded_int neg_unboundedint(unbounded_int a) {
+    a.signe = '-';
+    return a;
+}
+
+unbounded_int unbounded_int_somme(unbounded_int a, unbounded_int b) {
+    if(a.signe == '+' && b.signe == '-') {
+        unbounded_int tmp;
+        return unbounded_int_difference(a,tmp = abs_unboundedint(b));
+    }
+    if(a.signe == '-' && b.signe == '+') {
+        unbounded_int tmp;
+        return unbounded_int_difference(b,tmp = abs_unboundedint(a));
+    }
+    int l = a.len > b.len ? a.len : b.len;
+    char *res = malloc((sizeof(char) * l) + 2);
+    if(res == NULL) return NouvelleListe();
+    res[l+1] = '\0';
+    if(a.signe == '-' && b.signe == '-') {
+        res[0] = '-';
+    }
+    chiffre *tmpA = a.dernier;
+    chiffre *tmpB = b.dernier;
+    int r = 0;
+    int c;
+    do {
+      if(tmpA != NULL && tmpB != NULL) {  
+            c = (((tmpA->c-'0') + (tmpB->c-'0')+ r )%10);
+            r = ((tmpA->c-'0') + (tmpB->c-'0')+ r )/10;
+            res[l] = c+'0';
+            l--;
+            tmpA = tmpA->precedent;
+            tmpB = tmpB->precedent;
+      } else if(tmpA == NULL && tmpB != NULL){
+            c = (( (tmpB->c-'0')+ r)%10);
+            res[l] = c+'0';
+            r = ((tmpB->c-'0')+ r)/10;
+            l--;
+            tmpB = tmpB->precedent;
+      } else {
+            c = (( (tmpA->c-'0')+ r )%10);
+            res[l] = c+'0';
+            r = ((tmpA->c-'0')+ r )/10;
+            l--;
+            tmpA = tmpA->precedent;
+      }
+    } while(tmpA != NULL || tmpB != NULL);
+    if(l == 0 && res[l] != '-') res[l] = r != 0  ? r + '0' : 'a'; 
+    return string2unbounded_int(res);
+}
+
+unbounded_int unbounded_int_difference( unbounded_int a, unbounded_int b) {
+    if(unbounded_int_cmp_unbounded_int(a,b) == -1) return neg_unboundedint(unbounded_int_difference(b,a));
+    if(a.signe == '+' && b.signe == '-') {
+        unbounded_int tmp;
+        return unbounded_int_somme(a,tmp = abs_unboundedint(b));
+    }
+    if(a.signe == '-' && b.signe == '+') {
+        unbounded_int tmp;
+        return neg_unboundedint(unbounded_int_somme(b,tmp = abs_unboundedint(a)));
+    }
+    int l = a.len > b.len ? a.len : b.len;
+    char *res = malloc((sizeof(char) * l) + 1);
+    if(res == NULL) return NouvelleListe();
+    res[l] = '\0';
+    chiffre *tmpA = a.dernier;
+    chiffre *tmpB = b.dernier;
+    int r = 0;
+    int c;
+    do{
+        if(tmpA != NULL && tmpB != NULL) {  
+           if( ( ( (tmpA->c-'0') - (tmpB->c-'0') ) + r ) >= 0 ){
+               c = ( ( (tmpA->c-'0') - (tmpB->c-'0') ) + r );
+               r = 0;
+           } else {
+               c = ( ( (tmpA->c-'0') - (tmpB->c-'0') ) + r ) + 10;
+               r = -1;
+           }
+            res[l-1] = c+'0';
+            l--;
+            tmpA = tmpA->precedent;
+            tmpB = tmpB->precedent;
+      } else if(tmpA == NULL && tmpB != NULL){
+           if( ( (tmpB->c-'0') + r ) >= 0 ){
+               c = ( ( (tmpB->c-'0') ) + r );
+               r = 0;
+           } else {
+               c = ( ( (tmpB->c-'0') ) + r ) + 10;
+               r = -1;
+           }
+            res[l-1] = c+'0';
+            l--;
+            tmpB = tmpB->precedent;
+      } else {
+           if( ( (tmpA->c-'0') + r ) >= 0 ){
+               c = ( ( (tmpA->c-'0') ) + r );
+               r = 0;
+           } else {
+               c = ( ( (tmpA->c-'0') ) + r ) + 10;
+               r = -1;
+           }
+            res[l-1] = c+'0';
+            l--;
+            tmpA = tmpA->precedent; 
+      }
+    } while(tmpA != NULL || tmpB != NULL);
+    int j = 0;
+    while(res[j] == '0' ){
+        res[j] = 'a';
+        j++;
+    }
+    return string2unbounded_int(res);
+}
+
+unbounded_int unbounded_int_produit( unbounded_int a, unbounded_int b) {
+    int l = a.len > b.len ? a.len : b.len;
+    char *res = malloc( ( (sizeof(char) * l) * 2) + 1);
+    if(res == NULL) return NouvelleListe();
 }
 
 static void affiche_unbounded_int(unbounded_int a) {
