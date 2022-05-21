@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-#include "unbounded_int.c"
+#include "unbounded_int.h"
+static void affiche_unbounded_int(unbounded_int a);
 
 int main(void) {
     printf("\n ------ STRING TO UNBOUNDED INT ------\n");
@@ -74,4 +75,14 @@ int main(void) {
     r = ll2unbounded_int(20);
     sous = unbounded_int_difference(q,r);
     affiche_unbounded_int(sous);
+}
+
+static void affiche_unbounded_int(unbounded_int a) {
+    printf("Longueur : %ld et Signe : %c\nunbounded_int : ",a.len,a.signe);
+    chiffre *tmp = a.premier;
+    while( tmp !=  NULL){
+        printf("%c ",tmp->c);
+        tmp = tmp->suivant;
+    }
+    printf("\n");
 }
