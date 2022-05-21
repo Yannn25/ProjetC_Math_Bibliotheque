@@ -277,12 +277,4 @@ unbounded_int unbounded_int_produit( unbounded_int a, unbounded_int b) {
     if(res == NULL) return NouvelleListe();
 }
 
-static void affiche_unbounded_int(unbounded_int a) {
-    printf("Longueur : %ld et Signe : %c\nunbounded_int : ",a.len,a.signe);
-    chiffre *tmp = a.premier;
-    while( tmp !=  NULL){
-        printf("%c ",tmp->c);
-        tmp = tmp->suivant;
-    }
-    printf("\n");
-}
+
