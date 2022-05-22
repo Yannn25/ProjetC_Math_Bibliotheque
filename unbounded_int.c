@@ -95,6 +95,7 @@ unbounded_int ll2unbounded_int(long long i) {
 }
 
 
+
 char *unbounded_int2string(unbounded_int i) {
     assert(i.signe != '*');
     // l'allocation d'espace est faite en fonction du signe de notre unbounded int  
@@ -314,4 +315,77 @@ static void affiche_unbounded_int(unbounded_int a) {
         tmp = tmp->suivant;
     }
     printf("\n");
+}
+
+static long long unbounded_int2ll(unbounded_int a) {
+    long long res = 0;
+    int mul = 1;
+    chiffre *tmp = a.dernier;
+    while(tmp != NULL) {
+        res += (tmp->c - '0') * mul;
+        mul = mul*10;
+        tmp = tmp->precedent;
+    }
+    return res;
+}
+static char *binaire(long long a) {
+  long long cop1 = a;
+  int l = 0;
+  while(cop1 > 0) {
+    cop1 /= 2;
+    l++; 
+  }
+  long long cop2 = a;
+  char *res = a > 0  ? malloc((l * sizeof(char)) + 1) : malloc((l * sizeof(char)) + 2);
+  int deb = a > 0  ? 0 : 1;
+  if(deb == 1){
+        res[0] = '-';
+        l++;
+  }
+  for(int j = l-1; j >= deb; j--){
+        res[j] = (abs(cop2)%2)+'0';
+        cop2 /= 2;
+  }
+  //on oublie pas de mettre le caractère qui spécifie la fin de notre chaine de caractere
+  res[l] = '\0';
+  return res;
+}
+
+static long long bin2ll(char *bin) {
+  int mul = 1;
+  int deb = bin[0] == '-' ? 1 : 0; 
+  long long res = 0, i;
+  for(i = strlen(bin)-1; i >= deb; i--) {
+    res += (bin[i] - '0') *  mul;
+    mul *= 2;
+  }
+  return res;
+}
+
+static char  *divBinaire(char *a,char *b){
+  int lenA = strlen(a), lenB = strlen(b);
+  char *res = malloc( lenA + 1); 
+  res[l] = '\0';
+  char *tmp;
+  /* Division de a par b avec la méthode de décalage... */
+  for(int i = 0; i < lenA; i++) {
+    tmp = memcpy(tmp, a+i, lenB);
+  }
+}
+
+unbounded_int unbounded_int_quotient(unbounded_int a, unbounded_int b ) {
+    /*  On commence par convertir nos unbounded int en long long */
+    long long lla = unbounded_int2ll(a);
+    long long llb = unbounded_int2ll(b);
+
+    /* Ensuite on convertir le tout en base binaire */
+    char *binA = binaire(lla);
+    char *binB = binaire(llb);
+    
+    /* Puis on effectue leur division */
+    char *res = divBinaire(binA, binB);
+
+    /* Enfin on retourne le resultat de la division sous forme de unbounded int
+    (avec au préalable la conversion du résultat en décimal) */
+    return ll2unbounded_int(bin2ll(res));
 }

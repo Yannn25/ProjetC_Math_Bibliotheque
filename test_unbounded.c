@@ -87,4 +87,5 @@ int main(void) {
     x =  string2unbounded_int("-12");
     mul = unbounded_int_produit(x,w);
     affiche_unbounded_int(mul);
+
 }
