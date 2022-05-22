@@ -1,5 +1,6 @@
 {
     "files.associations": {
         "unbounded_int.h": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }

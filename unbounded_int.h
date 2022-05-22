@@ -1,4 +1,5 @@
-#include <stdio.h>
+#ifndef UNBOUNDED_INT_H
+#define UNBOUNDED_INT_H  
 
 typedef struct chiffre{
     struct chiffre *suivant;
@@ -70,6 +71,9 @@ static unbounded_int abs_unboundedint(unbounded_int a);
 
 static unbounded_int neg_unboundedint(unbounded_int a);
 /* Change le signe de a en '-' de a */
+#endif
+
+
 
 static long long unbounded_int2ll(unbounded_int a); 
 /* Permet de transformer un unbounded_int en long long */
