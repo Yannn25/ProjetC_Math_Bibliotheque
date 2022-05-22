@@ -63,6 +63,12 @@ variable* createVariable(const char *val[],char nom){
 
 void ajoutVariable(Liste *l,variable *v){  
     /* Insertion de l'élément au début de la liste */
+    if (l->first == NULL)
+    {
+        l->first = v;
+        return;
+    }
+    
     v->next = l->first;
     l->first = v;
 
@@ -93,13 +99,50 @@ void recupNombre(size_t deb,const char *chainesrc[],const char *chainedst[]){
         }
 }
 
+void TraitementLigne(const char *ligne){
+    char print[5];
+        char chiffre1 [255];
+        char chiffre2 [255];
+        char name = malloc(sizeof(char));
+        char op = malloc(sizeof(char));
+
+        for (size_t i = 0; i < 1024; i++)
+        {
+            if (ligne[i] == '+' || ligne[i] == '-' || ligne[i] == '*')
+            {
+                op = ligne [i];
+            }
+            recupNombre(0,ligne,chiffre1);
+
+            if (isalpha(ligne[i]))
+            {
+                name = ligne[i];
+            }
+        }
+}
+
+long addition(variable v1,variable v2){
+
+}
+long produit(variable v1,variable v2){
+
+}
+long soustraction(variable v1,variable v2){
+
+}
+
+void affiche(variable v){
+
+}
+
+
 int main(int argc, char const *argv[])
 {
     FILE *src = malloc(sizeof(FILE));
     FILE *dst = malloc(sizeof(FILE));
     
-    
-
+    Liste *var = malloc(sizeof(variable*3));
+    var->first = NULL;
     char ligne [1024];
 
      if(argc == 3){
@@ -126,10 +169,6 @@ int main(int argc, char const *argv[])
             }
         }
         
-    
-        
-        
-        
     }
 
     if (argc == 5)
@@ -145,28 +184,8 @@ int main(int argc, char const *argv[])
 
      while (fgets(ligne,1024,src) != NULL)
     {
-        char print[5];
-        char chiffre1 [255];
-        char chiffre2 [255];
-        char name = malloc(sizeof(char));
-        char op = malloc(sizeof(char));
-
-        for (size_t i = 0; i < 1024; i++)
-        {
-            if (ligne[i] == '+' || ligne[i] == '-' || ligne[i] == '*')
-            {
-                op = ligne [i];
-            }
-            recupNombre(0,ligne,chiffre1);
-
-            if (isalpha(ligne[i]))
-            {
-                name = ligne[i];
-            }
-            
-            
-            
-        }
+        TraitementLigne(ligne);
+        
          
         
     }
