@@ -62,7 +62,7 @@ static char *ll2str(long long i);
 static unbounded_int  NouvelleListe();
 /* permet de créer un nouveau unbouded int vide avec pour signe '*', de longeur 0 et sans aucun pointeur */
 
-static chiffre *new(char c);
+static chiffre *newChiffre(char c);
 /* permet de créer un nouveau chiffre avec le char c passer en paramètres
     et les pointeurs suivant et precedent a NULL  */
 
@@ -71,9 +71,20 @@ static unbounded_int abs_unboundedint(unbounded_int a);
 
 static unbounded_int neg_unboundedint(unbounded_int a);
 /* Change le signe de a en '-' de a */
+
+
+
+
+static long long unbounded_int2ll(unbounded_int a); 
+/* Permet de transformer un unbounded_int en long long */
+
+//static char *binaire(long long a);
+/* Convertir un nombre en binaire */
+
+//static long long bin2ll(char *bin);
+/* Convertir une chaine de caractères qui représente un nombre binaire en entier */
+
+//static char  *divBinaire(char *a,char *b);
+/* Implémentation de la division de deux nombres binaires */
 #endif
-
-
-
-
 

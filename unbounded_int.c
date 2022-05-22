@@ -8,7 +8,7 @@
 
 
 
-static chiffre *new(char c){
+static chiffre *newChiffre(char c){
     chiffre *res = malloc(sizeof(chiffre));
     assert(res != NULL);
     res->c = c;
@@ -43,7 +43,7 @@ unbounded_int string2unbounded_int(const char *e) {
 
     for (size_t i = deb; i < strlen(e); i++) {
         if (isdigit(e[i])) { //isdigit()-> vérifie si un caractère est un chiffre
-            c = new(e[i]);
+            c = newChiffre(e[i]);
             if (liste.premier != NULL) {
                 liste.dernier->suivant = c; 
 		        c->precedent = liste.dernier;
@@ -93,6 +93,7 @@ unbounded_int ll2unbounded_int(long long i) {
    return string2unbounded_int(e);
 
 }
+
 
 
 char *unbounded_int2string(unbounded_int i) {
@@ -272,9 +273,128 @@ unbounded_int unbounded_int_difference( unbounded_int a, unbounded_int b) {
 }
 
 unbounded_int unbounded_int_produit( unbounded_int a, unbounded_int b) {
+    if ( a.signe == '-' && b.signe == '-' ){
+        unbounded_int tmp1; unbounded_int tmp2;
+        return  unbounded_int_produit( tmp1 = abs_unboundedint(a), tmp2 = abs_unboundedint(b) ) ; 
+    }
+    if ( a.signe == '-' || b.signe == '-' ){
+        unbounded_int tmp1; unbounded_int tmp2;
+        return neg_unboundedint( unbounded_int_produit( tmp1 = abs_unboundedint(a), tmp2 = abs_unboundedint(b) ) ); 
+    }
+    long long v = unbounded_int2ll(a) * unbounded_int2ll(b);
+    char *res = ll2str(v);
+    return string2unbounded_int(res);
+}
+
+/* Première implémentation qui ne marche pas!!! 
+unbounded_int unbounded_int_produit( unbounded_int a, unbounded_int b) {
+    if ( a.signe == '-' || b.signe == '-' ){
+        unbounded_int tmp1; unbounded_int tmp2;
+        return neg_unboundedint( unbounded_int_produit( tmp1 = abs_unboundedint(a), tmp2 = abs_unboundedint(b) ) ); 
+    }
     int l = a.len > b.len ? a.len : b.len;
     char *res = malloc( ( (sizeof(char) * l) * 2) + 1);
     if(res == NULL) return NouvelleListe();
+    res[l*2] = '\0';
+    for(int i = 0; i < l*2; i++){
+      res[i] = '0';
+    }
+    char *strA = unbounded_int2string(a);
+    char *strB = unbounded_int2string(b); 
+    int r = 0, i = 0, j = 0, w = 0;
+    for( j = 0; j < (int)b.len; j++){ // boucle sur les chiffres de b
+        r = 0;
+        if( strB[j] == 0 )
+            continue;
+        for(i = 0; i < (int)a.len; i++ ){ // boucle sur les chiffres de a
+            int v = (res[i+j] - '0') + ( (strA[i] - '0')*(strB[j] - '0') ) + r;
+            res[i+j] = (v % 10) + '0';
+            r = v / 10;
+            }
+            res[j + (int)a.len] = r + '0';
+            w++;
+        }
+    w++;    
+    while(res[w] == '0' ){
+        res[w] = 'a';
+        w++;
+    }
+    return string2unbounded_int(res);
+}
+*/
+
+
+static long long unbounded_int2ll(unbounded_int a) {
+    long long res = 0;
+    int mul = 1;
+    chiffre *tmp = a.dernier;
+    while(tmp != NULL) {
+        res += (tmp->c - '0') * mul;
+        mul = mul*10;
+        tmp = tmp->precedent;
+    }
+    return res;
 }
 
+// static char *binaire(long long a) {
+//   long long cop1 = a;
+//   int l = 0;
+//   while(cop1 > 0) {
+//     cop1 /= 2;
+//     l++; 
+//   }
+//   long long cop2 = a;
+//   char *res = a > 0  ? malloc((l * sizeof(char)) + 1) : malloc((l * sizeof(char)) + 2);
+//   int deb = a > 0  ? 0 : 1;
+//   if(deb == 1){
+//         res[0] = '-';
+//         l++;
+//   }
+//   for(int j = l-1; j >= deb; j--){
+//         res[j] = (abs(cop2)%2)+'0';
+//         cop2 /= 2;
+//   }
+//   //on oublie pas de mettre le caractère qui spécifie la fin de notre chaine de caractere
+//   res[l] = '\0';
+//   return res;
+// }
+
+// static long long bin2ll(char *bin) {
+//   int mul = 1;
+//   int deb = bin[0] == '-' ? 1 : 0; 
+//   long long res = 0, i;
+//   for(i = strlen(bin)-1; i >= deb; i--) {
+//     res += (bin[i] - '0') *  mul;
+//     mul *= 2;
+//   }
+//   return res;
+// }
+
+/*static char  *divBinaire(char *a,char *b){
+  int lenA = strlen(a), lenB = strlen(b);
+  char *res = malloc( lenA + 1); 
+  res[lenA] = '\0';
+  char *tmp;
+   //Division de a par b avec la méthode de décalage... 
+  for(int i = 0; i < lenA; i++) {
+    tmp = memcpy(tmp, a+i, lenB);
+  }
+}*/
+
+// unbounded_int unbounded_int_quotient(unbounded_int a, unbounded_int b ) {
+//     /*  On commence par convertir nos unbounded int en long long */
+//     long long lla = unbounded_int2ll(a);
+//     long long llb = unbounded_int2ll(b);
+
+//     /* Ensuite on convertir le tout en base binaire */
+//     char *binA = binaire(lla);
+//     char *binB = binaire(llb);
+    
+//     /* Puis on effectue leur division */
+//     char *res = divBinaire(binA, binB);
+
+//     /* Enfin on retourne le resultat de la division sous forme de unbounded int
+//     (avec au préalable la conversion du résultat en décimal) */
+//     return ll2unbounded_int(bin2ll(res));
+// }
 
