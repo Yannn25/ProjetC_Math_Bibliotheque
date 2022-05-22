@@ -71,7 +71,7 @@ static unbounded_int abs_unboundedint(unbounded_int a);
 
 static unbounded_int neg_unboundedint(unbounded_int a);
 /* Change le signe de a en '-' de a */
-#endif
+
 
 
 
@@ -86,5 +86,5 @@ static long long unbounded_int2ll(unbounded_int a);
 
 //static char  *divBinaire(char *a,char *b);
 /* Implémentation de la division de deux nombres binaires */
-
+#endif
 

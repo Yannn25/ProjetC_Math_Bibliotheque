@@ -324,17 +324,6 @@ unbounded_int unbounded_int_produit( unbounded_int a, unbounded_int b) {
 */
 
 
-<<<<<<< unbounded_int.c
-static void affiche_unbounded_int(unbounded_int a) {
-    printf("Longueur : %ld et Signe : %c\nunbounded_int : ",a.len,a.signe);
-    chiffre *tmp = a.premier;
-    while( tmp !=  NULL){
-        printf("%c ",tmp->c);
-        tmp = tmp->suivant;
-    }
-    printf("\n");
-}
-
 static long long unbounded_int2ll(unbounded_int a) {
     long long res = 0;
     int mul = 1;
@@ -346,6 +335,7 @@ static long long unbounded_int2ll(unbounded_int a) {
     }
     return res;
 }
+
 // static char *binaire(long long a) {
 //   long long cop1 = a;
 //   int l = 0;
@@ -407,6 +397,4 @@ static long long unbounded_int2ll(unbounded_int a) {
 //     (avec au préalable la conversion du résultat en décimal) */
 //     return ll2unbounded_int(bin2ll(res));
 // }
-=======
 
->>>>>>> unbounded_int.c
