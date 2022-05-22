@@ -37,8 +37,12 @@ typedef struct Liste
     variable *first;
 }Liste;
 
-long find(Liste l,char variable){
-
+long find(Liste l,char var){
+    variable *tmp = l.first;
+    while(tmp != NULL){
+        if( tmp->name == var ) return 1;
+        tmp = tmp->next;
+    }
     return 0;
 }
 
