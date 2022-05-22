@@ -12,4 +12,4 @@ unbounded_int.o : unbounded_int.c
 test_unbounded.o : test_unbounded.c
 	$(CC) $(CFLAGS) test_unbounded.o -c test_unbounded.c
 clean :
-	rm -rf *.o && rm -rf prog
+	rm -rf *.o && rm -rf calc_unbounded_int && rm -rf test

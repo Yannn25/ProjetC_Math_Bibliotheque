@@ -98,9 +98,17 @@ void recupNombre(size_t deb,const char *chainesrc[],const char *chainedst[]){
             j++;
         }
 }
-
-void TraitementLigne(const char *ligne){
+char * doitprint(const char *e[]){
     char print[5];
+
+    for (int i = 0; i < strlen(e); i++)
+    {
+       
+    }
+    
+}
+void TraitementLigne(const char *ligne[]){
+    
         char chiffre1 [255];
         char chiffre2 [255];
         char name = malloc(sizeof(char));
@@ -121,18 +129,18 @@ void TraitementLigne(const char *ligne){
         }
 }
 
-long addition(variable v1,variable v2){
-
+void addition(variable *v,variable *v1,variable *v2){
+    v->ub = unbounded_int_somme(v1->ub, v2->ub);
 }
-long produit(variable v1,variable v2){
-
-}
-long soustraction(variable v1,variable v2){
-
+void produit(variable *v,variable *v1,variable *v2){
+    v->ub = unbounded_int_produit(v1->ub, v2->ub);
 }
 
+void soustraction(variable *v,variable *v1,variable *v2){
+    v->ub = unbounded_int_difference(v1->ub, v2->ub);
+}
 void affiche(variable v){
-
+    printf("%c = %ld",v.name,v.value);
 }
 
 
@@ -185,8 +193,6 @@ int main(int argc, char const *argv[])
      while (fgets(ligne,1024,src) != NULL)
     {
         TraitementLigne(ligne);
-        
-         
         
     }
 
