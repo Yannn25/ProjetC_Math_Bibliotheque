@@ -149,8 +149,8 @@ int main(int argc, char const *argv[])
     FILE *src = malloc(sizeof(FILE));
     FILE *dst = malloc(sizeof(FILE));
     
-    Liste *var = malloc(sizeof(variable*3));
-    var->first = NULL;
+    //Liste *var = malloc(sizeof(variable*3));
+    //var->first = NULL;
     char ligne [1024];
 
      if(argc == 3){
