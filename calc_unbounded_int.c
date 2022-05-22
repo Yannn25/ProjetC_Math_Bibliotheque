@@ -37,18 +37,25 @@ typedef struct Liste
     variable *first;
 }Liste;
 
-int find(Liste l,char variable){
+long find(Liste l,char variable){
+
     return 0;
 }
 
-/*variable createVariable(char val,char nom){
 
-}*/
+variable* createVariable(const char *val[],char nom){
+    variable *n = malloc(sizeof(variable));
+    long v = val-'\0';
+    unbounded_int r = string2unbounded_int(val);
+    n->value =v;
+    n->name = nom;
+    n->ub = r;
+    n->next = NULL;
+    return n;
 
-void ajoutVariable(Liste *l,variable *v){//ajoute une variable au début de la liste    
-        /* Création du nouvel élément */
-  
+}
 
+void ajoutVariable(Liste *l,variable *v){  
     /* Insertion de l'élément au début de la liste */
     v->next = l->first;
     l->first = v;
@@ -121,8 +128,9 @@ int main(int argc, char const *argv[])
 
         for (size_t i = 0; i < strlen(ligne); i++)
         {
-            /* code */
+            
         }
+         
         
     }
 
