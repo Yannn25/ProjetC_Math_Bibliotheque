@@ -75,6 +75,19 @@ void clear(Liste *liste){ //vide la liste
     }
 }
 
+void recupNombre(size_t deb,const char *chainesrc,const char *chainedst){
+    size_t j = 0;
+    size_t i = deb;
+    
+    while (isdigit(chainesrc[i]) && chainesrc[i]!='\0')
+        {
+            chainedst[j] = chainesrc[i];
+            i++;
+            j++;
+        }
+
+}
+
 int main(int argc, char const *argv[])
 {
     FILE *src = malloc(sizeof(FILE));
