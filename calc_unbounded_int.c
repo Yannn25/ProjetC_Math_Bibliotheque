@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 #include "unbounded_int.h"
 
 /*  idée:
@@ -79,7 +81,7 @@ void clear(Liste *liste){ //vide la liste
     }
 }
 
-void recupNombre(size_t deb,const char *chainesrc,const char *chainedst){
+void recupNombre(size_t deb,const char *chainesrc[],const char *chainedst[]){
     size_t j = 0;
     size_t i = deb;
     
@@ -89,7 +91,6 @@ void recupNombre(size_t deb,const char *chainesrc,const char *chainedst){
             i++;
             j++;
         }
-
 }
 
 int main(int argc, char const *argv[])
@@ -108,19 +109,25 @@ int main(int argc, char const *argv[])
 
     if (argc == 4)
     {
-        if ("-i" == argv[1])
+        
+        if (strcmp("i",argv[1]))
         {
             printf("que l'option -i");
             src = fopen (argv [2],"r+");
             dst = stdout;
-        }
-
-        if ("-o" == argv[2])
+        }else
         {
-            printf("que l'option -o");
-            src = stdin;
-            dst = fopen (argv [3],"a+");
+           if (strcmp("-o",argv[2]))
+            {
+                printf("que l'option -o");
+                src = fopen(argv[1],"r+");
+                src = stdin;
+                dst = fopen (argv [3],"a+");
+            }
         }
+        
+    
+        
         
         
     }
@@ -138,13 +145,26 @@ int main(int argc, char const *argv[])
 
      while (fgets(ligne,1024,src) != NULL)
     {
+        char print[5];
         char chiffre1 [255];
         char chiffre2 [255];
         char name = malloc(sizeof(char));
         char op = malloc(sizeof(char));
 
-        for (size_t i = 0; i < strlen(ligne); i++)
+        for (size_t i = 0; i < 1024; i++)
         {
+            if (ligne[i] == '+' || ligne[i] == '-' || ligne[i] == '*')
+            {
+                op = ligne [i];
+            }
+            recupNombre(0,ligne,chiffre1);
+
+            if (isalpha(ligne[i]))
+            {
+                name = ligne[i];
+            }
+            
+            
             
         }
          

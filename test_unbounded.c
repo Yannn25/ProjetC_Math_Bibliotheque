@@ -107,6 +107,8 @@ int main(void) {
     printf("La multiplication de -12 et -14 :\n");
     affiche_unbounded_int(mul);
 
+    return 0;
+
 }
 
 static void affiche_unbounded_int(unbounded_int a) {
