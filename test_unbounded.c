@@ -74,4 +74,17 @@ int main(void) {
     r = ll2unbounded_int(20);
     sous = unbounded_int_difference(q,r);
     affiche_unbounded_int(sous);
+
+     printf("\n--------  MULTIPLICATION -------\n");
+
+    unbounded_int x = string2unbounded_int("11");
+    unbounded_int w = string2unbounded_int("11");
+    unbounded_int mul = unbounded_int_produit(x,w);
+    affiche_unbounded_int(mul);
+    w = string2unbounded_int("-14");
+    mul = unbounded_int_produit(x,w);
+    affiche_unbounded_int(mul);
+    x =  string2unbounded_int("-12");
+    mul = unbounded_int_produit(x,w);
+    affiche_unbounded_int(mul);
 }

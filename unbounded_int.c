@@ -8,7 +8,7 @@
 
 
 
-static chiffre *new(char c){
+static chiffre *newChiffre(char c){
     chiffre *res = malloc(sizeof(chiffre));
     assert(res != NULL);
     res->c = c;
@@ -43,7 +43,7 @@ unbounded_int string2unbounded_int(const char *e) {
 
     for (size_t i = deb; i < strlen(e); i++) {
         if (isdigit(e[i])) { //isdigit()-> vérifie si un caractère est un chiffre
-            c = new(e[i]);
+            c = newChiffre(e[i]);
             if (liste.premier != NULL) {
                 liste.dernier->suivant = c; 
 		        c->precedent = liste.dernier;
@@ -272,9 +272,38 @@ unbounded_int unbounded_int_difference( unbounded_int a, unbounded_int b) {
 }
 
 unbounded_int unbounded_int_produit( unbounded_int a, unbounded_int b) {
+    if ( a.signe == '-' || b.signe == '-' ){
+        unbounded_int tmp1; unbounded_int tmp2;
+        return neg_unboundedint( unbounded_int_produit( tmp1 = abs_unboundedint(a), tmp2 = abs_unboundedint(b) ) ); 
+    }
     int l = a.len > b.len ? a.len : b.len;
     char *res = malloc( ( (sizeof(char) * l) * 2) + 1);
     if(res == NULL) return NouvelleListe();
+    res[l*2] = '\0';
+    for(int i = 0; i < l*2; i++){
+      res[i] = '0';
+    }
+    char *strA = unbounded_int2string(a);
+    char *strB = unbounded_int2string(b); 
+    int r = 0, i = 0, j = 0, w = 0;
+    for( j = 0; j < (int)b.len; j++){ /* boucle sur les chiffres de b*/
+        r = 0;
+        if( strB[j] == 0 )
+            continue;
+        for(i = 0; i < (int)a.len; i++ ){ /* boucle sur les chiffres de a*/
+            int v = (res[i+j] - '0') + ( (strA[i] - '0')*(strB[j] - '0') ) + r;
+            res[i+j] = (v % 10) + '0';
+            r = v / 10;
+            }
+            res[j + (int)a.len] = r + '0';
+            w++;
+        }
+    w++;    
+    while(res[w] == '0' ){
+        res[w] = 'a';
+        w++;
+    }
+    return string2unbounded_int(res);
 }
 
 static void affiche_unbounded_int(unbounded_int a) {

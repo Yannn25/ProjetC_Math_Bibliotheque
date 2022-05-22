@@ -61,7 +61,7 @@ static char *ll2str(long long i);
 static unbounded_int  NouvelleListe();
 /* permet de créer un nouveau unbouded int vide avec pour signe '*', de longeur 0 et sans aucun pointeur */
 
-static chiffre *new(char c);
+static chiffre *newChiffre(char c);
 /* permet de créer un nouveau chiffre avec le char c passer en paramètres
     et les pointeurs suivant et precedent a NULL  */
 
