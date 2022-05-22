@@ -72,6 +72,8 @@ int main(int argc, char const *argv[])
 {
     FILE *src = malloc(sizeof(FILE));
     FILE *dst = malloc(sizeof(FILE));
+    
+    
 
     char ligne [1024];
 
@@ -104,10 +106,24 @@ int main(int argc, char const *argv[])
          src = fopen (argv [2],"r+");
          dst = fopen (argv [4],"a+");
     }
-    
-     while (fgets(ligne,255,src) != NULL)
+
+    if(src == NULL) {
+      perror("Error opening file");
+      return(-1);
+    }
+
+     while (fgets(ligne,1024,src) != NULL)
     {
-        printf("%s",ligne);
+        char chiffre1 [255];
+        char chiffre2 [255];
+        char name = malloc(sizeof(char));
+        char op = malloc(sizeof(char));
+
+        for (size_t i = 0; i < strlen(ligne); i++)
+        {
+            /* code */
+        }
+        
     }
 
     fclose(src);
