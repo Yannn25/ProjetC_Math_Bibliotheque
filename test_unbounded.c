@@ -77,8 +77,8 @@ int main(void) {
 
      printf("\n--------  MULTIPLICATION -------\n");
 
-    unbounded_int x = string2unbounded_int("11");
-    unbounded_int w = string2unbounded_int("11");
+    unbounded_int x = string2unbounded_int("225");
+    unbounded_int w = string2unbounded_int("15689");
     unbounded_int mul = unbounded_int_produit(x,w);
     affiche_unbounded_int(mul);
     w = string2unbounded_int("-14");

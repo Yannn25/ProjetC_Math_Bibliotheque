@@ -272,6 +272,23 @@ unbounded_int unbounded_int_difference( unbounded_int a, unbounded_int b) {
 }
 
 unbounded_int unbounded_int_produit( unbounded_int a, unbounded_int b) {
+    if ( a.signe == '-' && b.signe == '-' ){
+        unbounded_int tmp1; unbounded_int tmp2;
+        return  unbounded_int_produit( tmp1 = abs_unboundedint(a), tmp2 = abs_unboundedint(b) ) ; 
+    }
+    if ( a.signe == '-' || b.signe == '-' ){
+        unbounded_int tmp1; unbounded_int tmp2;
+        return neg_unboundedint( unbounded_int_produit( tmp1 = abs_unboundedint(a), tmp2 = abs_unboundedint(b) ) ); 
+    }
+    char *strA = unbounded_int2string(a);
+    char *strB = unbounded_int2string(b); 
+    int v = atoi(strA) * atoi(strB);
+    char *res = ll2str(v);
+    return string2unbounded_int(res);
+}
+
+/* Première implémentation qui ne marche pas!!! 
+unbounded_int unbounded_int_produit( unbounded_int a, unbounded_int b) {
     if ( a.signe == '-' || b.signe == '-' ){
         unbounded_int tmp1; unbounded_int tmp2;
         return neg_unboundedint( unbounded_int_produit( tmp1 = abs_unboundedint(a), tmp2 = abs_unboundedint(b) ) ); 
@@ -286,11 +303,11 @@ unbounded_int unbounded_int_produit( unbounded_int a, unbounded_int b) {
     char *strA = unbounded_int2string(a);
     char *strB = unbounded_int2string(b); 
     int r = 0, i = 0, j = 0, w = 0;
-    for( j = 0; j < (int)b.len; j++){ /* boucle sur les chiffres de b*/
+    for( j = 0; j < (int)b.len; j++){ // boucle sur les chiffres de b
         r = 0;
         if( strB[j] == 0 )
             continue;
-        for(i = 0; i < (int)a.len; i++ ){ /* boucle sur les chiffres de a*/
+        for(i = 0; i < (int)a.len; i++ ){ // boucle sur les chiffres de a
             int v = (res[i+j] - '0') + ( (strA[i] - '0')*(strB[j] - '0') ) + r;
             res[i+j] = (v % 10) + '0';
             r = v / 10;
@@ -305,6 +322,8 @@ unbounded_int unbounded_int_produit( unbounded_int a, unbounded_int b) {
     }
     return string2unbounded_int(res);
 }
+*/
+
 
 static void affiche_unbounded_int(unbounded_int a) {
     printf("Longueur : %ld et Signe : %c\nunbounded_int : ",a.len,a.signe);
