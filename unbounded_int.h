@@ -74,13 +74,13 @@ static unbounded_int neg_unboundedint(unbounded_int a);
 static long long unbounded_int2ll(unbounded_int a); 
 /* Permet de transformer un unbounded_int en long long */
 
-static char *binaire(long long a);
+//static char *binaire(long long a);
 /* Convertir un nombre en binaire */
 
-static long long bin2ll(char *bin);
+//static long long bin2ll(char *bin);
 /* Convertir une chaine de caractères qui représente un nombre binaire en entier */
 
-static char  *divBinaire(char *a,char *b);
+//static char  *divBinaire(char *a,char *b);
 /* Implémentation de la division de deux nombres binaires */
 
 
