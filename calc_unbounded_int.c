@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 #include "unbounded_int.h"
 
 /*  idée:
@@ -61,6 +63,12 @@ variable* createVariable(const char *val[],char nom){
 
 void ajoutVariable(Liste *l,variable *v){  
     /* Insertion de l'élément au début de la liste */
+    if (l->first == NULL)
+    {
+        l->first = v;
+        return;
+    }
+    
     v->next = l->first;
     l->first = v;
 
@@ -79,7 +87,7 @@ void clear(Liste *liste){ //vide la liste
     }
 }
 
-void recupNombre(size_t deb,const char *chainesrc,const char *chainedst){
+void recupNombre(size_t deb,const char *chainesrc[],const char *chainedst[]){
     size_t j = 0;
     size_t i = deb;
     
@@ -89,16 +97,60 @@ void recupNombre(size_t deb,const char *chainesrc,const char *chainedst){
             i++;
             j++;
         }
-
 }
+char * doitprint(const char *e[]){
+    char print[5];
+
+    for (int i = 0; i < strlen(e); i++)
+    {
+       
+    }
+    
+}
+void TraitementLigne(const char *ligne[]){
+    
+        char chiffre1 [255];
+        char chiffre2 [255];
+        char name = malloc(sizeof(char));
+        char op = malloc(sizeof(char));
+
+        for (size_t i = 0; i < 1024; i++)
+        {
+            if (ligne[i] == '+' || ligne[i] == '-' || ligne[i] == '*')
+            {
+                op = ligne [i];
+            }
+            recupNombre(0,ligne,chiffre1);
+
+            if (isalpha(ligne[i]))
+            {
+                name = ligne[i];
+            }
+        }
+}
+
+void addition(variable *v,variable *v1,variable *v2){
+    v->ub = unbounded_int_somme(v1->ub, v2->ub);
+}
+void produit(variable *v,variable *v1,variable *v2){
+    v->ub = unbounded_int_produit(v1->ub, v2->ub);
+}
+
+void soustraction(variable *v,variable *v1,variable *v2){
+    v->ub = unbounded_int_difference(v1->ub, v2->ub);
+}
+void affiche(variable v){
+    printf("%c = %ld",v.name,v.value);
+}
+
 
 int main(int argc, char const *argv[])
 {
     FILE *src = malloc(sizeof(FILE));
     FILE *dst = malloc(sizeof(FILE));
     
-    
-
+    Liste *var = malloc(sizeof(variable*3));
+    var->first = NULL;
     char ligne [1024];
 
      if(argc == 3){
@@ -108,20 +160,22 @@ int main(int argc, char const *argv[])
 
     if (argc == 4)
     {
-        if ("-i" == argv[1])
+        
+        if (strcmp("i",argv[1]))
         {
             printf("que l'option -i");
             src = fopen (argv [2],"r+");
             dst = stdout;
-        }
-
-        if ("-o" == argv[2])
+        }else
         {
-            printf("que l'option -o");
-            src = stdin;
-            dst = fopen (argv [3],"a+");
+           if (strcmp("-o",argv[2]))
+            {
+                printf("que l'option -o");
+                src = fopen(argv[1],"r+");
+                src = stdin;
+                dst = fopen (argv [3],"a+");
+            }
         }
-        
         
     }
 
@@ -138,16 +192,7 @@ int main(int argc, char const *argv[])
 
      while (fgets(ligne,1024,src) != NULL)
     {
-        char chiffre1 [255];
-        char chiffre2 [255];
-        char name = malloc(sizeof(char));
-        char op = malloc(sizeof(char));
-
-        for (size_t i = 0; i < strlen(ligne); i++)
-        {
-            
-        }
-         
+        TraitementLigne(ligne);
         
     }
 

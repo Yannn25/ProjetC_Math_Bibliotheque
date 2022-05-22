@@ -42,11 +42,11 @@ int main(void) {
     j = unbounded_int_cmp_unbounded_int(c,d);
     k = unbounded_int_cmp_unbounded_int(b,b);
     printf("e: %i\nf: %i\ng: %i\nh: %i\ni: %i\nj: %i\nk: %i\n",e,f,g,h,i,j,k);
-    printf("\n")
+    printf("\n");
     e = unbounded_int_cmp_ll(n,-224);
     f = unbounded_int_cmp_ll(a,124);
     g = unbounded_int_cmp_ll(b,322);
-    h = unbounded_int_cmp_unbounded_int(d,777);//0 
+    h = unbounded_int_cmp_ll(d,777);//0 
     printf("e: %i\nf: %i\ng: %i\nh: %i\ni: %i\nj: %i\nk: %i\n",e,f,g,h,i,j,k);
     printf("----------- \n");
 
@@ -106,6 +106,8 @@ int main(void) {
     mul = unbounded_int_produit(x,w);
     printf("La multiplication de -12 et -14 :\n");
     affiche_unbounded_int(mul);
+
+    return 0;
 
 }
 
